@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fc">
+  <meta name="description" content="Математическая экспедиция Захара и его пса Тедди: 30 уровней, умножение, деление, остаток и интересные задачки для 3 класса.">
+  <title>Захар и Тедди · Математическая экспедиция</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='20' fill='%236453df'/%3E%3Cpath d='M32 10l6 15 16 2-12 11 4 16-14-9-14 9 4-16L10 27l16-2z' fill='%23d9f98c'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">К игре</a>
+  <header class="site-header">
+    <a class="brand" href="#map" aria-label="Захар и Тедди — карта экспедиции"><span class="brand-mark" aria-hidden="true">✦</span><span>Захар <span class="brand-and">и</span> Тедди<small>МАТЕМАТИЧЕСКАЯ ЭКСПЕДИЦИЯ</small></span></a>
+    <nav class="header-actions" aria-label="Основное меню">
+      <button type="button" id="table-button" class="nav-button"><span data-icon="book"></span><span>Таблица</span></button>
+      <div id="wallet" class="wallet" aria-label="Собрано 0 звёзд из 90"><span aria-hidden="true">★</span><b id="star-total">0</b><span class="wallet-max">/ 90</span></div>
+      <button type="button" id="settings-button" class="icon-button" aria-label="Настройки"><span data-icon="settings"></span></button>
+    </nav>
+  </header>
+  <main id="main-content" tabindex="-1">
+    <section id="screen-home" class="screen" aria-labelledby="home-title">
+      <div class="intro-row"><div><p class="eyebrow">БОРТОВОЙ ЖУРНАЛ</p><h1 id="home-title">К открытиям, Захар!</h1></div><span class="grade-tag">3 класс <span>+ чуть дальше</span></span></div>
+      <article class="launch-card">
+        <div class="launch-copy"><p class="mission-label" id="mission-label">МИР 1 · РАЗМИНКА ТЕДДИ</p><h2 id="launch-title">Всё начинается<br>с маленькой звезды.</h2><p id="launch-description">Тедди уже готов! Решай примеры, открывай новые миры и собирай звёзды.</p><button class="primary-button" id="continue-game" type="button">Начать экспедицию <span data-icon="arrow"></span></button><p class="mission-meta" id="mission-meta">Уровень 1 · 8 задач · 3 сердца</p></div>
+        <div class="launch-art"><span class="orbit orbit-one" aria-hidden="true"></span><span class="orbit orbit-two" aria-hidden="true"></span><span class="space-spark spark-one" aria-hidden="true">✦</span><span class="space-spark spark-two" aria-hidden="true">+</span><div class="mascot mascot-home" data-reaction="neutral" role="img" aria-label="Захар и пёс Тедди приветствуют тебя"></div><span class="teddy-note">Ну что, за звёздами?</span></div>
+      </article>
+      <div class="map-heading"><h2>Карта экспедиции</h2><span id="map-progress">Пройдено 0 из 30 уровней</span></div>
+      <div id="world-map" class="world-grid" aria-label="Шесть миров и тридцать уровней"></div>
+      <p class="map-note"><span data-icon="star"></span>Каждая попытка — новые примеры. Звёзды остаются с тобой.</p>
+    </section>
+    <section id="screen-game" class="screen game-screen" aria-labelledby="game-title" hidden>
+      <div class="game-heading"><button class="text-button" id="game-back" type="button"><span data-icon="back"></span>К карте</button><div class="game-world"><p class="eyebrow" id="game-eyebrow"></p><h1 id="game-title"></h1></div><div id="hearts" class="hearts"></div></div>
+      <div class="progress-line"><span id="task-counter"></span><progress id="task-progress" value="0" max="8" aria-label="Пройдено задач"></progress><span id="game-badge" class="tiny-tag">ЭКСПЕДИЦИЯ</span></div>
+      <article class="task-card">
+        <div class="task-content"><div class="task-topline"><span class="eyebrow" id="task-kind">УМНОЖЕНИЕ</span><span class="task-number" id="task-number">01</span></div>
+          <h2 class="expression" id="expression" aria-live="polite"></h2>
+          <form id="answer-form" novalidate>
+            <div id="number-fields" class="number-fields"><div class="field-wrap"><label id="answer-label" for="answer-input">Твой ответ</label><input id="answer-input" name="answer" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="4" dir="ltr" enterkeyhint="done" aria-describedby="input-help feedback" placeholder="?"></div><div class="field-wrap" id="remainder-wrap" hidden><label for="remainder-input">Остаток</label><input id="remainder-input" name="remainder" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" spellcheck="false" maxlength="4" dir="ltr" enterkeyhint="done" placeholder="?" aria-describedby="feedback"></div></div>
+            <div id="choice-fields" class="choice-fields" role="group" aria-label="Выбери ответ" hidden></div>
+            <p id="input-help" class="input-help">Введи число. Enter — проверить.</p>
+            <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+            <button id="retry-answer" type="button" class="secondary-button" hidden>Попробовать ещё раз <span data-icon="arrow"></span></button>
+            <button id="submit-answer" type="submit" class="primary-button check-button">Проверить <span data-icon="check"></span></button>
+          </form>
+        </div>
+        <aside class="keypad-side" aria-label="Экранная клавиатура"><p class="keypad-label">ТВОЯ ПАНЕЛЬ УПРАВЛЕНИЯ</p><div id="keypad" class="keypad"></div><div class="keyboard-tip"><span data-icon="keyboard"></span>Можно и с клавиатуры</div></aside>
+      </article>
+      <div class="companion-row"><div class="mascot mascot-game" data-reaction="neutral" role="img" aria-label="Захар и Тедди рядом"></div><div class="companion-copy"><p class="companion-title" id="companion-title">Мы с тобой!</p><p id="companion-message">Не спеши. У тебя всё получится.</p><button type="button" id="hint-button" class="hint-button"><span data-icon="bulb"></span>Подсказка Тедди</button><p id="hint-text" class="hint-text" role="status" hidden></p></div></div>
+    </section>
+    <section id="screen-table" class="screen table-screen" aria-labelledby="table-title" hidden>
+      <button class="text-button" type="button" id="table-back"><span data-icon="back"></span><span id="table-back-label">К карте</span></button>
+      <div class="intro-row"><div><p class="eyebrow">СПРАВОЧНИК ТЕДДИ</p><h1 id="table-title">У каждой таблицы есть секрет.</h1><p class="muted">Выбери число и потренируйся в своём темпе.</p></div><span class="calm-tag">Без сердец и оценок</span></div>
+      <div class="table-layout"><div class="reference-card"><div class="segmented" role="group" aria-label="Действие"><button type="button" data-mode="multiply" aria-pressed="true">Умножение</button><button type="button" data-mode="divide" aria-pressed="false">Деление</button></div><div class="table-scroll"><table class="times-grid" id="times-grid"><caption>Таблица умножения от 2 до 9</caption></table></div><p class="table-legend" id="table-legend">Выделен столбец ×2</p></div><aside class="practice-card"><span class="eyebrow">ЛИЧНАЯ ТРЕНИРОВКА</span><h2 id="practice-title">Дружим с двойкой</h2><div class="factor-buttons" id="factor-buttons" role="group" aria-label="Выбери число"></div><div id="fact-list" class="fact-list"></div><button class="primary-button" type="button" id="start-practice">Тренировать ×2 <span data-icon="arrow"></span></button><p class="practice-note">8 примеров. Ошибаться можно!</p></aside></div>
+    </section>
+    <section id="screen-results" class="screen results-screen" aria-labelledby="results-title" hidden><div class="result-card"><p class="eyebrow" id="result-eyebrow"></p><div class="mascot mascot-result" data-reaction="complete" role="img" aria-label="Захар и Тедди празднуют"></div><div id="result-stars" class="result-stars"></div><h1 id="results-title"></h1><p id="result-description"></p><div class="result-stats" id="result-stats"></div><div id="review-problems" class="review-problems" hidden></div><div class="result-actions"><button class="primary-button" type="button" id="next-level">Следующий уровень <span data-icon="arrow"></span></button><button class="secondary-button" type="button" id="replay-level">Пройти ещё раз</button><button class="text-button" type="button" id="results-map">К карте экспедиции</button></div></div></section>
+  </main>
+  <footer class="author-mark">Придумано 🧠 · собрано с 🤖 · <a href="https://t.me/ZGennadiy" target="_blank" rel="noopener noreferrer">@ZGennadiy</a></footer>
+  <dialog id="settings-dialog" aria-labelledby="settings-title"><div class="dialog-top"><h2 id="settings-title">Настройки экспедиции</h2><button class="icon-button" type="button" data-close="settings-dialog" aria-label="Закрыть настройки"><span data-icon="close"></span></button></div><label class="setting-row"><span>Анимации<small>Движение персонажей и переходы</small></span><input type="checkbox" id="setting-animations"></label><label class="setting-row"><span>Звуки<small>Короткие сигналы после ответа</small></span><input type="checkbox" id="setting-sound"></label><p class="settings-note">Прогресс сохраняется в этом браузере на этом устройстве.</p><button class="danger-button" id="reset-game" type="button">Сбросить игру</button><button class="primary-button full-width" type="button" data-close="settings-dialog">Готово</button></dialog>
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><span class="dialog-symbol" aria-hidden="true">↺</span><h2 id="reset-title">Сбросить весь прогресс Захара?</h2><p>Звёзды и открытые уровни будут удалены.</p><div class="dialog-actions"><button class="secondary-button" type="button" data-close="reset-dialog" autofocus>Отмена</button><button class="danger-button" type="button" id="confirm-reset">Да, сбросить</button></div></dialog>
+  <dialog id="leave-dialog" aria-labelledby="leave-title"><h2 id="leave-title">Вернуться на карту?</h2><p>Текущую попытку нужно будет начать заново. Собранные раньше звёзды сохранятся.</p><div class="dialog-actions"><button class="secondary-button" type="button" data-close="leave-dialog" autofocus>Продолжить уровень</button><button class="primary-button" type="button" id="confirm-leave">К карте</button></div></dialog>
+  <dialog id="practice-dialog" aria-labelledby="practice-dialog-title"><h2 id="practice-dialog-title">Перейти к тренировке?</h2><p>Текущая попытка уровня закончится. Собранные раньше звёзды сохранятся.</p><div class="dialog-actions"><button class="secondary-button" type="button" data-close="practice-dialog" autofocus>Остаться</button><button class="primary-button" type="button" id="confirm-practice">Тренироваться</button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript">Для игры нужно включить JavaScript в браузере.</p></noscript>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
