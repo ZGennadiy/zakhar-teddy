@@ -1,0 +1,108 @@
+{
+  "sourceSha256": "2b04198fb34a4ca9acc7532dc6ee17dc9ddf26ed024c904ce9ff570225e8cc1c",
+  "canvas": [
+    512,
+    384
+  ],
+  "poses": {
+    "wave": [
+      213,
+      15,
+      403,
+      334
+    ],
+    "happy-dog": [
+      17,
+      344,
+      168,
+      545
+    ],
+    "thumbs-up": [
+      468,
+      13,
+      620,
+      334
+    ],
+    "paw-wave": [
+      229,
+      348,
+      429,
+      547
+    ],
+    "thinking-boy": [
+      684,
+      19,
+      868,
+      334
+    ],
+    "thinking-dog": [
+      908,
+      333,
+      1071,
+      544
+    ],
+    "hug": [
+      284,
+      557,
+      454,
+      764
+    ]
+  },
+  "states": {
+    "neutral": {
+      "file": "neutral.png",
+      "poses": [
+        "wave",
+        "happy-dog"
+      ],
+      "bounds": [
+        105,
+        55,
+        406,
+        358
+      ],
+      "sha256": "bcc7b81d52eb0749927a7c90db2b57387bec4dd988fa72e630e6409a621be5b6"
+    },
+    "correct": {
+      "file": "correct.png",
+      "poses": [
+        "thumbs-up",
+        "paw-wave"
+      ],
+      "bounds": [
+        91,
+        50,
+        421,
+        358
+      ],
+      "sha256": "38e029a8c374bbfb98b59f31df61f87fa4052150c32007dd41e085b2d7854fe9"
+    },
+    "wrong": {
+      "file": "wrong.png",
+      "poses": [
+        "thinking-boy",
+        "thinking-dog"
+      ],
+      "bounds": [
+        93,
+        58,
+        419,
+        358
+      ],
+      "sha256": "0806d3c8f3aece743c4529cbf5c454fdf5e94f437629b46950308019049c36fc"
+    },
+    "complete": {
+      "file": "complete.png",
+      "poses": [
+        "hug"
+      ],
+      "bounds": [
+        120,
+        52,
+        392,
+        358
+      ],
+      "sha256": "8daa54566730909c2fbad3163e77539f6d1e75a8675eaca10f46dd4de896e647"
+    }
+  }
+}

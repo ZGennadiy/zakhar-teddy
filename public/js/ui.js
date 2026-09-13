@@ -1,6 +1,7 @@
 import { WORLDS, LEVELS, getLevel } from './config.js';
 import { currentTask } from './game-state.js';
 import { totalStars } from './storage.js';
+import { renderMascot } from './mascots.js';
 export const $ = id => document.getElementById(id);
 export const show = (id, visible) => { $(id).hidden = !visible; };
 const paths = {
@@ -67,7 +68,7 @@ export function renderGame(state) {
   const feedback=$('feedback');feedback.dataset.type=state.phase;
   feedback.textContent=state.phase==='correct'?'✓ Точно! Отличная работа.':state.phase==='wrong'?`Попробуем ещё раз. ${task.hint}`:'';
   const reaction=state.phase==='correct'?'correct':state.phase==='wrong'?'wrong':'neutral';
-  document.querySelector('.mascot-game').dataset.reaction=reaction;
+  renderMascot(document.querySelector('.mascot-game'),reaction);
   $('companion-title').textContent=reaction==='correct'?'Ещё одна маленькая победа!':reaction==='wrong'?'Давай разберёмся вместе.':'Мы с тобой!';
   $('companion-message').textContent=reaction==='correct'?'Тедди рад твоему открытию.':reaction==='wrong'?'Ошибки помогают понять, что потренировать.':'Не спеши. У тебя всё получится.';
 }
@@ -86,8 +87,7 @@ export function renderReference(mode, factor) {
 export function renderResults(state) {
   const complete=state.phase==='completed', n=complete&&!state.practice?state.lives:0;
   $('result-eyebrow').textContent=state.practice?'ТРЕНИРОВКА ЗАВЕРШЕНА':complete?`УРОВЕНЬ ${state.level.id} ПРОЙДЕН`:'ЕЩЁ ОДНА ПОПЫТКА — ЕЩЁ ОДНО ОТКРЫТИЕ';
-  document.querySelector('.mascot-result').dataset.reaction=complete?'complete':'wrong';
-  document.querySelector('.mascot-result').setAttribute('aria-label',complete?'Захар и Тедди празднуют победу':'Захар и Тедди поддерживают тебя');
+  renderMascot(document.querySelector('.mascot-result'),complete?'complete':'wrong');
   $('result-stars').innerHTML=state.practice?'':stars(n);$('result-stars').setAttribute('aria-label',`${n} из 3 звёзд`);
   $('results-title').textContent=state.practice?'Отлично потренировались!':complete?state.level.id===30?'Вся экспедиция пройдена!':'Звёзды — твои!':'Попробуем ещё раз?';
   $('result-description').textContent=state.practice?'Каждый знакомый пример делает тебя увереннее.':complete?state.level.id===30?'Захар и Тедди открыли все миры. Можно вернуться за недостающими звёздами.':'Следующая остановка уже открыта. Захар и Тедди готовы идти дальше!':'Сердца закончились, но открытия впереди. В новой попытке будут другие примеры и снова три сердца.';

@@ -26,6 +26,7 @@ test('HTTP server serves the game and assets at root and the Pages subpath', { t
     for (const [asset, type] of [
       ['/js/app.js', 'text/javascript'], ['/css/styles.css', 'text/css'],
       ['/assets/zakhar-teddy-original.jpeg', 'image/jpeg'],
+      ...['neutral', 'correct', 'wrong', 'complete'].map(name => [`/assets/mascots/${name}.png`, 'image/png']),
     ]) {
       const response = await fetch(`${base}${prefix}${asset}`);
       assert.equal(response.status, 200, `${prefix}${asset} must load`);

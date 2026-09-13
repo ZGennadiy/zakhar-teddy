@@ -39,6 +39,23 @@ test('DOM: Enter submits once and restores focus on the next empty question',asy
   await boot(t);$('continue-game').click();const p=tasks(1)[0];type('answer-input',String(p.answer));key('answer-input','Enter');key('answer-input','Enter');
   assert.equal(saved().skillStats.multiply.correct,1);t.mock.timers.tick(900);assert.equal($('task-counter').textContent,'Задача 2 из 8');assert.equal($('answer-input').value,'');assert.equal(document.activeElement.id,'answer-input');
 });
+test('DOM: mascot image follows actual wrong, retry, correct and completed transitions',async t=>{
+  await boot(t);
+  const image=selector=>document.querySelector(`${selector} img`).getAttribute('src');
+  assert.equal(image('.mascot-home'),'./assets/mascots/neutral.png');
+  $('continue-game').click();const list=tasks(1);
+  assert.equal(image('.mascot-game'),'./assets/mascots/neutral.png');
+  type('answer-input','999');key('answer-input','Enter');
+  assert.equal(image('.mascot-game'),'./assets/mascots/wrong.png');
+  $('retry-answer').click();assert.equal(image('.mascot-game'),'./assets/mascots/neutral.png');
+  for(const p of list){
+    value('answer-input',String(p.answer));key('answer-input','Enter');
+    assert.equal(image('.mascot-game'),'./assets/mascots/correct.png');
+    t.mock.timers.tick(900);
+  }
+  assert.equal(image('.mascot-result'),'./assets/mascots/complete.png');
+  assert.equal(saved().bestStarsByLevel[1],2);
+});
 test('DOM: incomplete remainder Enter focuses remainder; keypad follows focus',async t=>{
   await boot(t,{schemaVersion:2,bestStarsByLevel:Object.fromEntries(Array.from({length:20},(_,i)=>[i+1,3]))});document.querySelector('[data-level="21"]').click();
   const p=tasks(21)[0];type('answer-input',String(p.answer.quotient));key('answer-input','Enter');assert.equal(document.activeElement.id,'remainder-input');
