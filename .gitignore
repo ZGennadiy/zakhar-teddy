@@ -5,3 +5,4 @@ playwright-report/
 .sites-runtime/
 .env*
 !.env.example
+.DS_Store
