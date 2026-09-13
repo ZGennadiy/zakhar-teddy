@@ -26,9 +26,31 @@ test('keypad regression, mixed input, stale caret and keyboard focus',async({pag
 });
 test('Numpad digits follow native order',async({page,browserName})=>{
   test.skip(browserName==='webkit','Physical NumPad mapping is tested in Chromium; WebKit uses host keyboard mapping.');
-  // Playwright's physical US layout maps unmodified Numpad1/5 to End/Clear.
-  // Shift selects their numeric mapping while preserving the Numpad codes/location.
-  await play(page);await page.keyboard.press('Shift+Numpad1');await page.keyboard.press('Shift+Numpad5');await expect(input(page)).toHaveValue('15');
+  await play(page);
+  await input(page).evaluate(el=>{
+    window.numpadEvents={keys:[],inputs:[]};
+    el.addEventListener('keydown',e=>window.numpadEvents.keys.push({key:e.key,code:e.code,location:e.location,shift:e.shiftKey,trusted:e.isTrusted}));
+    el.addEventListener('input',e=>window.numpadEvents.inputs.push({data:e.data,type:e.inputType,trusted:e.isTrusted}));
+  });
+  // Playwright 1.58's Shift+Numpad1 retains the virtual key code for End.
+  // Send NumLock-on key codes through Chromium's native input protocol instead.
+  // No DOM event dispatch or direct value assignment: the browser inserts digits.
+  // https://chromedevtools.github.io/devtools-protocol/1-3/Input/#method-dispatchKeyEvent
+  const session=await page.context().newCDPSession(page);
+  try {
+    let expected='';
+    for(const digit of ['1','5']) {
+      const key={key:digit,code:`Numpad${digit}`,windowsVirtualKeyCode:96+Number(digit),isKeypad:true,modifiers:0};
+      await session.send('Input.dispatchKeyEvent',{...key,type:'keyDown',text:digit,unmodifiedText:digit});
+      await session.send('Input.dispatchKeyEvent',{...key,type:'keyUp'});
+      expected+=digit;
+      await expect(input(page)).toHaveValue(expected);
+    }
+    expect(await page.evaluate(()=>window.numpadEvents)).toEqual({
+      keys:[{key:'1',code:'Numpad1',location:3,shift:false,trusted:true},{key:'5',code:'Numpad5',location:3,shift:false,trusted:true}],
+      inputs:[{data:'1',type:'insertText',trusted:true},{data:'5',type:'insertText',trusted:true}],
+    });
+  } finally {await session.detach();}
 });
 test('a wrong answer costs one heart; retry keeps the task; third error fails',async({page})=>{
   await play(page);const prompt=await page.locator('#expression').textContent();
@@ -88,4 +110,6 @@ test('long expressions at a 640px reflow viewport',async({page})=>{
 test('200% text scaling keeps the primary controls usable',async({page})=>{
   await page.setViewportSize({width:768,height:1024});await play(page);await page.addStyleTag({content:':root { font-size: 32px !important; }'});
   await expect(input(page)).toBeVisible();await expect(page.locator('#submit-answer')).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await expect(page.locator('#table-button')).toBeInViewport();await expect(page.locator('#wallet')).toBeInViewport();await expect(page.locator('#settings-button')).toBeInViewport();
+  await page.locator('#settings-button').click();await expect(page.getByRole('dialog',{name:'Настройки экспедиции'})).toBeVisible();
 });

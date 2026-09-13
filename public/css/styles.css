@@ -26,6 +26,8 @@ dialog{border:1px solid #e5e5f1;border-radius:25px;padding:30px;width:min(465px,
 @media(max-width:540px){.mascot-home{transform:translate(-3px,-16px) scale(1.19)}.mascot-game{width:112px;min-height:74px}}
 
 .mascot{mix-blend-mode:multiply}
+/* Let the navigation move to the next line when text is enlarged. */
+.site-header{flex-wrap:wrap}
 /* Readable labels; compact metadata remains secondary. */
 .world-card>p,.field-wrap label,.input-help,.companion-copy>p:not(.companion-title):not(.hint-text),.hint-button{font-size:.875rem}
 .eyebrow,.mission-label,.world-index,.world-status,.mission-meta,.keypad-label,.keyboard-tip,.tiny-tag,.table-legend,.author-mark{font-size:.75rem}
